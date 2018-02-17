@@ -6,24 +6,23 @@
                 border:5px solid orange;
                 background: url("javascript/background.jpg");
             }
-        
-        
+
+
         </style>
     </head>
-    
+
     <body bgcolor=black>
-        <p> Pokemon Game   Made by $Aman$</p>
         <canvas id="mycanvas" width="800px" height="500px" ></canvas>
         <script>
-            
+
             var canvas=document.getElementsByTagName('canvas')[0];
-            
-            var enemy = 
+
+            var enemy =
             {x:150, y:50, w:50,h:50,speedY:4};
-            
-            var enemy2 = 
+
+            var enemy2 =
             {x:450, y:150, w:50,h:50,speedY:-7};
-            
+
             //Load Images
             var playerImg = new Image();
             playerImg.src = "javascript/pika.png";
@@ -33,51 +32,51 @@
             enemy2Img.src = "javascript/gengar.png";
             var goalImg = new Image();
             goalImg.src = "javascript/ball.png";
-            
-            var player = 
+
+            var player =
             {x:10, y:200, w:50,h:50,speedX:10,
             isMoving:false};
-             
-            
-            var goal = 
+
+
+            var goal =
             {x:700, y:200, w:50,h:50};
-    
-    
+
+
             var GAME_WIDTH = 800;
             var GAME_HEIGHT =500;
             var game_over = false;
-            
+
     var pen = canvas.getContext('2d');
-    canvas.addEventListener("mousedown",
+    canvas.addEventListener("touchend",
         function(){ player.isMoving = true; }
-                           
+
         );
-    canvas.addEventListener("mouseup",
-        function(){ player.isMoving = false;}                  
+    canvas.addEventListener("touchstart",
+        function(){ player.isMoving = false;}
         );
-    
-    
+
+
     var isColliding = function(r1,r2){
 var firstCond = Math.abs(r1.x - r2.x)<=50;
 var secondCond = Math.abs(r1.y - r2.y)<=50;
-        
+
     return firstCond&&secondCond?true:false;
-        
+
     }
-    
-            
+
+
     var draw = function(){
     //Clear the old screen
     pen.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
     pen.fillStyle = "rgba(100,0,100,1)";
     pen.drawImage(enemyImg,enemy.x,enemy.y,enemy.w,enemy.h);
      pen.drawImage(enemy2Img,enemy2.x,enemy2.y,enemy2.w,enemy2.h);
-    
+
  pen.drawImage(playerImg,player.x,player.y,player.w,player.h);
-    
-        
+
+
  pen.drawImage(goalImg,goal.x,goal.y,goal.w,goal.h);
-        
+
     }
     var update = function(){
         if(isColliding(enemy,player)||isColliding(enemy2,player)){
@@ -89,35 +88,35 @@ var secondCond = Math.abs(r1.y - r2.y)<=50;
             game_over = true;
             window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeBdbaL5c33hfLzctEcdr17obtwK1_1JNHUunIBW69MIXRJ4w/viewform';
         }
-        
+
         enemy.y = enemy.y + enemy.speedY;
         if(enemy.y >= GAME_HEIGHT - enemy.h|| enemy.y <=0){
             enemy.speedY = -1*enemy.speedY;
         }
-        
+
         enemy2.y = enemy2.y + enemy2.speedY;
         if(enemy2.y >= GAME_HEIGHT - enemy2.h|| enemy2.y <=0){
             enemy2.speedY = -1*enemy2.speedY;
         }
-        
+
         if(player.isMoving==true){
             player.x += player.speedX;
         }
-        
-        
-    }    
+
+
+    }
     var render = function(){
         draw();
         update();
-        
+
         console.log("I am in Render");
         if(game_over==false){
         window.requestAnimationFrame(render);
         }
     }
     render();
-            
-        
+
+
         </script>
     </body>
 
